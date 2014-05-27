@@ -6,6 +6,8 @@
 #include <iostream>
 #include<cmath>
 #include <xutility>
+#include "LCS.h"
+#include "FullBag.h"
 using namespace std;
 
 
@@ -35,13 +37,13 @@ int find(int i,int j)//i是放到第几个了。j是剩下多少重量，
 
 
 
-int buf[5][5];
+int buf[5][6];
 
 int find2()
 {
-	for(int i=0;i<5;i++)
+	for(int i=0;i<6;i++)
 	{
-		for(int j=0;j<5;j++)
+		for(int j=0;j<6;j++)
 		{
 			buf[i][j]=0;
 		}
@@ -49,18 +51,41 @@ int find2()
 
 	for(int i=0;i<n;i++)
 	{
-		
+		for(int j=0;j<6;j++)
+		{
+			if(W[i]>j)
+			{
+				buf[i+1][j]=buf[i][j];
+			}
+			else
+			{
+				buf[i+1][j]=max(buf[i][j],buf[i][j-W[i]]+V[i]);
+			}
+		}
 	}
+
+	//cout<<buf[4][4];
+	return buf[4][5];
 }
 
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	int finalValue=find(0,weight);
-	cout<<finalValue;
+	//int finalValue=find(0,weight);
+	//int finalValue=find2();
+	//cout<<finalValue;
+	
+
+	//LCS lcs;
+	//lcs.FindLength();
+
+	FullBag fullBag;
+	fullBag.FindBag();
+
 	int mm=0;
 	cin>>mm;
 	return 0;
 }
+
 
